@@ -1,0 +1,71 @@
+/******************************************************************************
+** LESS FOR COLLAPSER
+******************************************************************************/
+
+.section-collapser{
+
+	.block-title {
+	    background: url("@{plExtendRoot}/collapser/images/title-bg.png") repeat-x scroll 0 18px transparent;
+		font-size: 14px;
+		letter-spacing: 1px;
+		margin-bottom: 20px;
+		padding: 10px;
+		text-align: center;
+		text-transform: uppercase;
+
+	    span {
+		    padding: 0 10px;
+		}		
+	}
+
+	h3 {
+	    line-height: 22px;
+	    margin-bottom: 5px;
+	}
+
+	.center{
+		text-align:center;
+	}
+	.collapser-data{
+		.accordion-group {
+			background: none;
+			margin-bottom: 0px;
+			border: 0 none;
+			.border-radius(0);
+
+			.collapser-heading{
+				
+				background: url("@{plExtendRoot}/collapser/images/more.png") 15px no-repeat;
+				padding: 0 0 0 50px;
+				.transition( all 0.2s ease );
+				margin-bottom: 5px;
+				.collapser-toggle{
+					display:block;
+					font-size:16px;
+					background-color:@pl-base;	
+					padding:15px 0px 15px 10px;
+					.transition( all 0.2s ease );
+					&:hover{
+						color:@pl-link;
+					}
+				}
+				&:hover, &.active{
+					background: url("@{plExtendRoot}/collapser/images/less.png") 15px  no-repeat;
+					.collapser-toggle{
+						color:@pl-link;	
+					}
+				}
+			}
+
+			.collapser-inner{
+				p{
+					padding:0 10px;
+				}
+				
+			}
+		}	
+	}
+
+	
+
+}
