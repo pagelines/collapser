@@ -104,6 +104,7 @@ class CollapserTm extends PageLinesSection
 
 			.collapser-block<?php echo $clone_id?> .collapser-heading{
 				border: 1px solid <?php echo $border ?>;
+				background-color: <?php echo $item_back ?> !important;
 			}
 
 			.collapser-block<?php echo $clone_id?> .collapser-heading:hover,
@@ -333,16 +334,16 @@ class CollapserTm extends PageLinesSection
 				'shortexp'		=> __('Section colors.', $this->domain),
 				'selectvalues'	=> array(
 					'tm_collapser_section_title_bg'	=> array(				
-						'inputlabel' 	=> __( 'Section Title Background', $this->domain ),
+						'inputlabel' 	=> __( 'Title Background', $this->domain ),
 					),
 					'tm_collapser_title_color'	=> array(				
 						'inputlabel' 	=> __( 'Section Title  Text', $this->domain ),
 					),
 					'tm_collapser_item_background'	=> array(				
-						'inputlabel' 	=> __( 'Item Background', $this->domain ),
+						'inputlabel' 	=> __( 'Item highlight', $this->domain ),
 					),
 					'tm_collapser_item_background_over'	=> array(				
-						'inputlabel' 	=> __( 'Item Background Hover', $this->domain ),
+						'inputlabel' 	=> __( 'Item highlight hover', $this->domain ),
 					),
 					'tm_collapser_title_item_color'	=> array(				
 						'inputlabel' 	=> __( 'Item Title Text', $this->domain ),
