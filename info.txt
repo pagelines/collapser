@@ -20,6 +20,8 @@ On any instance, you can chose a different:
 * 8 different color per instance.
 * Thumbnail position (Left or right)
 
+Works with Templates and main content.
+
 And of course Collapser is full responsive.
 
 
