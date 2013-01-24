@@ -51,8 +51,14 @@ class CollapserTm extends PageLinesSection
 		$limit       = ( ploption('tm_collapser_items', $oset) ) ? ploption('tm_collapser_items', $oset) : '5';
 		$set         = ( ploption('tm_collapser_set', $oset) ) ? ploption('tm_collapser_set', $oset) : null;
 		$this->posts = $this->get_posts($this->custom_post_type, $this->tax_id, $set, $limit);
+		
+		if( !count( $this->posts ) ){
+			return;
+		}
+
 		$current     = $this->posts[0];
 		$last        = $parent.'-collapser-'.$current->ID;
+
 
 		/**********************************************************************
 		** Styles
