@@ -3,7 +3,7 @@
 Section: Collapser
 Author: Enrique Chávez
 Author URI: http://tmeister.net
-Version: 1.1
+Version: 1.2
 Description: Collapser is a simple but handy section that provides a way to show small pieces of information using an accordion-nav type with a feature image on a side to stand out the content. With more that 15 options to play with.
 Class Name: CollapserTm
 Cloning: true
@@ -149,6 +149,7 @@ class CollapserTm extends PageLinesSection
         $position          = ( ploption('tm_collapser_position', $oset) ) ? ploption('tm_collapser_position', $oset) : 'left';
         $read_more_text    = ( ploption('tm_collapser_read_more_text', $oset ) ) ? ploption('tm_collapser_read_more_text', $oset )  : 'Read More';
         $this->posts       = $this->get_posts($this->custom_post_type, $this->tax_id, $set, $limit);
+        $show_first        = ! ploption( 'tm_collapser_hide_first_tab',$oset );
 
         if( !count($this->posts  ) ){
             echo setup_section_notify($this, __('Sorry,there are no post to display.', $this->domain), get_admin_url().'edit.php?post_type='.$this->custom_post_type, __('Please create some posts', $this->domain));
@@ -169,7 +170,7 @@ class CollapserTm extends PageLinesSection
                     
                     <div class="span12">
                         <div class="collapser-data" id="<?php echo $parent ?>">
-                            <?php echo $this->draw_collapsers($parent) ?>
+                            <?php echo $this->draw_collapsers($parent, $show_first) ?>
                         </div>
                     </div>
                 
@@ -179,7 +180,7 @@ class CollapserTm extends PageLinesSection
                             <img src="<?php echo $image ?>" class="center">
                         <?php else: ?>
                             <div class="collapser-data" id="<?php echo $parent ?>">
-                                <?php echo $this->draw_collapsers($parent) ?>
+                                <?php echo $this->draw_collapsers($parent, $show_first) ?>
                             </div>
                         <?php endif ?>
                     </div>
@@ -188,7 +189,7 @@ class CollapserTm extends PageLinesSection
                             <img src="<?php echo $image ?>" class="center">
                         <?php else: ?>
                             <div class="collapser-data" id="<?php echo $parent ?>">
-                                <?php echo $this->draw_collapsers($parent) ?>
+                                <?php echo $this->draw_collapsers($parent, $show_first) ?>
                             </div>
                         <?php endif ?>
                     </div>
@@ -200,7 +201,7 @@ class CollapserTm extends PageLinesSection
     <?php
     }
 
-    function draw_collapsers($parent)
+    function draw_collapsers($parent, $show_first)
     {
         global $post; 
         $out = "";
@@ -227,8 +228,8 @@ class CollapserTm extends PageLinesSection
                   </div>';
             
             $morelink = ( strlen($link) ) ? '<p><a href="'.$link.'">'.$readmore.'</a></p>' : '';
-            $in = ($first) ? 'in' : '';
-            $active = ($first) ? 'active' : '';
+            $in = ($first && $show_first) ? 'in' : '';
+            $active = ($first && $show_first) ? 'active' : '';
             $out .=  sprintf($collapser, $active, $in, $morelink);
             $first = false;
         }
@@ -343,7 +344,13 @@ class CollapserTm extends PageLinesSection
                 'shortexp'      => __('Default value is 5', $this->domain),
                 'exp'           => __('The amount of post to show.', $this->domain),
                 'count_start'   => 1, 
-                'count_number'  => 25,
+                'count_number'  => 30,
+            ),
+            'tm_collapser_hide_first_tab' => array(
+                'type' => 'check',
+                'inputlabel' => __('Start with the first tab closed', $this->domain),
+                'title' => __('First tab closed'),
+                'shortexp' => _('Check if you don\'t want that the first tab shows open')
             ),
             'tm_collapser_background' =>    array(
                 'type'          => 'color_multi',
