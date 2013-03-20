@@ -3,7 +3,7 @@
 Section: Collapser
 Author: Enrique Chávez
 Author URI: http://tmeister.net
-Version: 1.2
+Version: 1.2.1
 Description: Collapser is a simple but handy section that provides a way to show small pieces of information using an accordion-nav type with a feature image on a side to stand out the content. With more that 15 options to play with.
 Class Name: CollapserTm
 Cloning: true
@@ -227,9 +227,9 @@ class CollapserTm extends PageLinesSection
                     </div>
                   </div>';
             
-            $morelink = ( strlen($link) ) ? '<p><a href="'.$link.'">'.$readmore.'</a></p>' : '';
-            $in = ($first && $show_first) ? 'in' : '';
-            $active = ($first && $show_first) ? 'active' : '';
+            $morelink = ( strlen($link) ) ? '<p><a href="'.$link.'">'.$readmore.'</a></p>' : ' ';
+            $in = ($first && $show_first) ? 'in' : ' ';
+            $active = ($first && $show_first) ? 'active' : ' ';
             $out .=  sprintf($collapser, $active, $in, $morelink);
             $first = false;
         }

@@ -41,6 +41,9 @@ And of course Collapser is full responsive.
 
 
 == Changelog ==
+= 1.2.1 =
+* Fix sprintf warning 
+
 = 1.2 =
 * Show up to 30 posts
 * Added a option to show all the tabs closed by default.
