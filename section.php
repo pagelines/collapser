@@ -3,7 +3,7 @@
 Section: Collapser
 Author: Enrique Chávez
 Author URI: http://tmeister.net
-Version: 1.2.2
+Version: 1.2.3
 Description: Collapser is a simple but handy section that provides a way to show small pieces of information using an accordion-nav type with a feature image on a side to stand out the content. With more that 15 options to play with.
 Class Name: CollapserTm
 Cloning: true
@@ -213,24 +213,23 @@ class CollapserTm extends PageLinesSection
             $image = plmeta('tm_collapser_image', $inner_oset);
             $link = plmeta('tm_collapser_url', $inner_oset);
             $readmore = plmeta('tm_collapser_read_more_text', $inner_oset);
+            $morelink = ( strlen($link) ) ? '<p><a href="'.$link.'">'.$readmore.'</a></p>' : ' ';
+            $in = ($first && $show_first) ? 'in' : ' ';
+            $active = ($first && $show_first) ? 'active' : '';
             $collapser = '<div class="accordion-group">
-                    <div class="collapser-heading %s" id="'.$parent.'-collapser-'.$post->ID.'">
+                    <div class="collapser-heading '.$active.'" id="'.$parent.'-collapser-'.$post->ID.'">
                       <a class="collapser-toggle" data-toggle="collapse" data-parent="#'.$parent.'" href="#'.$parent.'-'.$post->ID.'" data-image="'.$image.'">
                         '.get_the_title().'
                       </a>
                     </div>
-                    <div id="'.$parent.'-'.$post->ID.'" class="accordion-body collapse %s">
+                    <div id="'.$parent.'-'.$post->ID.'" class="accordion-body collapse '.$in.'">
                       <div class="collapser-inner">
                         <p>'.nl2br($post->post_content).'</p>
-                        %s
+                        '.$morelink.'
                       </div>
                     </div>
                   </div>';
-            
-            $morelink = ( strlen($link) ) ? '<p><a href="'.$link.'">'.$readmore.'</a></p>' : ' ';
-            $in = ($first && $show_first) ? 'in' : ' ';
-            $active = ($first && $show_first) ? 'active' : ' ';
-            $out .=  sprintf($collapser, $active, $in, $morelink, '');
+            $out .=  $collapser;
             $first = false;
         }
         return $out;

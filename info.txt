@@ -41,6 +41,9 @@ And of course Collapser is full responsive.
 
 
 == Changelog ==
+= 1.2.3 =
+* remove sprintf error with %
+
 = 1.2.2 =
 * Up to 100 posts
 
