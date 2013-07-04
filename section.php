@@ -63,14 +63,16 @@ class CollapserTm extends PageLinesSection
         /**********************************************************************
         ** Styles
         **********************************************************************/
-        $title_back             = ploption('tm_collapser_section_title_bg',$oset) ? ploption('tm_collapser_section_title_bg',$oset) : '#fff';
-        $title_color            = ploption('tm_collapser_title_color',$oset) ? ploption('tm_collapser_title_color',$oset) : pl_hashify( pl_link_color() );
-        $item_back              = ploption('tm_collapser_item_background',$oset) ? ploption('tm_collapser_item_background',$oset) : '#fff';
-        $item_back_hover        = ploption('tm_collapser_item_background_over',$oset) ? ploption('tm_collapser_item_background_over',$oset) : pl_hashify( pl_link_color() );
-        $item_title_color       = ploption('tm_collapser_title_item_color',$oset) ? ploption('tm_collapser_title_item_color',$oset) : pl_hashify( pl_text_color() );
-        $item_title_color_hover = ploption('tm_collapser_title_over_color',$oset) ? ploption('tm_collapser_title_over_color',$oset) : "fff000";//pl_hashify( pl_text_color() );
-        $border                 = ploption('tm_collapser_menu_border',$oset) ? ploption('tm_collapser_menu_border',$oset) : '#eaeaea';
-        $content_color          = ploption('tm_collapser_text_color',$oset) ? ploption('tm_collapser_text_color',$oset) : pl_hashify( pl_text_color() );
+        $title_back             = ploption('tm_collapser_section_title_bg',$oset) ? pl_hashify( ploption('tm_collapser_section_title_bg',$oset)) : '#fff';
+        $title_color            = ploption('tm_collapser_title_color',$oset) ? pl_hashify(ploption('tm_collapser_title_color',$oset)) : pl_hashify( pl_link_color() );
+        $item_back              = ploption('tm_collapser_item_background',$oset) ? pl_hashify(ploption('tm_collapser_item_background',$oset)) : '#fff';
+        $item_back_hover        = ploption('tm_collapser_item_background_over',$oset) ? pl_hashify(ploption('tm_collapser_item_background_over',$oset)) : pl_hashify( pl_link_color() );
+        $item_title_color       = ploption('tm_collapser_title_item_color',$oset) ? pl_hashify(ploption('tm_collapser_title_item_color',$oset)) : pl_hashify( pl_text_color() );
+        $item_title_color_hover = ploption('tm_collapser_title_over_color',$oset) ? pl_hashify(ploption('tm_collapser_title_over_color',$oset)) : "fff000";//pl_hashify( pl_text_color() );
+        $border                 = ploption('tm_collapser_menu_border',$oset) ? pl_hashify(ploption('tm_collapser_menu_border',$oset)) : '#eaeaea';
+        $content_color          = ploption('tm_collapser_text_color',$oset) ? pl_hashify(ploption('tm_collapser_text_color',$oset)) : pl_hashify( pl_text_color() );
+
+        
     ?>
         <script>
             jQuery(document).ready(function() 
@@ -351,38 +353,6 @@ class CollapserTm extends PageLinesSection
                 'title' => __('First tab closed'),
                 'shortexp' => _('Check if you don\'t want that the first tab shows open')
             ),
-            'tm_collapser_background' =>    array(
-                'type'          => 'color_multi',
-                'layout'        => 'full',
-                'title'         => __('Configure the colors to use.', $this->domain),
-                'shortexp'      => __('Section colors.', $this->domain),
-                'selectvalues'  => array(
-                    'tm_collapser_section_title_bg' => array(               
-                        'inputlabel'    => __( 'Title Background', $this->domain ),
-                    ),
-                    'tm_collapser_title_color'  => array(               
-                        'inputlabel'    => __( 'Section Title  Text', $this->domain ),
-                    ),
-                    'tm_collapser_item_background'  => array(               
-                        'inputlabel'    => __( 'Item highlight', $this->domain ),
-                    ),
-                    'tm_collapser_item_background_over' => array(               
-                        'inputlabel'    => __( 'Item highlight hover', $this->domain ),
-                    ),
-                    'tm_collapser_title_item_color' => array(               
-                        'inputlabel'    => __( 'Item Title Text', $this->domain ),
-                    ),
-                    'tm_collapser_title_over_color' => array(               
-                        'inputlabel'    => __( 'Item Title Text Hover', $this->domain ),
-                    ),
-                    'tm_collapser_menu_border'  => array(               
-                        'inputlabel'    => __( 'Item Border', $this->domain ),
-                    ),
-                    'tm_collapser_text_color'   => array(               
-                        'inputlabel'    => __( 'Content Text', $this->domain ),
-                    )
-                ),
-            ),
             'tm_collapser_position' => array(
                 'title'         => 'Thumbnail position',
                 'type'          => 'select',
@@ -395,6 +365,48 @@ class CollapserTm extends PageLinesSection
                 'shortexp'      => 'Default value: Left',
                 'exp'           => 'Indicates where the thumbnail images will be displayed. If you want to use a full  width tabs use the "Do not use thumbnails" option'
             ),
+            
+            'tm_collapser_section_title_bg' => array(
+                'type' => 'colorpicker',
+                'inputlabel' => __( 'Title Background', $this->domain ),
+                'title' => __( 'Title Background', $this->domain )
+            ),
+
+            'tm_collapser_title_color'  => array(               
+                'inputlabel'    => __( 'Section Title Text', $this->domain ),
+                'type' => 'colorpicker',
+                'title' => __( 'Section Title Text', $this->domain )
+            ),
+            'tm_collapser_item_background'  => array(               
+                'inputlabel'    => __( 'Item highlight', $this->domain ),
+                'type' => 'colorpicker',
+                'title' => __( 'Item highlight', $this->domain ),
+            ),
+            'tm_collapser_item_background_over' => array(               
+                'inputlabel'    => __( 'Item highlight hover', $this->domain ),
+                'type' => 'colorpicker',
+                'title' => __( 'Item highlight hover', $this->domain ),
+            ),
+            'tm_collapser_title_item_color' => array(               
+                'inputlabel'    => __( 'Item Title Text', $this->domain ),
+                'type' => 'colorpicker',
+                'title' => __( 'Item Title Text', $this->domain ),
+            ),
+            'tm_collapser_title_over_color' => array(               
+                'inputlabel'    => __( 'Item Title Text Hover', $this->domain ),
+                'type' => 'colorpicker',
+                'title' => __( 'Item Title Text Hover', $this->domain ),
+            ),
+            'tm_collapser_menu_border'  => array(               
+                'inputlabel'    => __( 'Item Border', $this->domain ),
+                'type' => 'colorpicker',
+                'title' => __( 'Item Border', $this->domain ),
+            ),
+            'tm_collapser_text_color'   => array(               
+                'inputlabel'    => __( 'Content Text', $this->domain ),
+                'type' => 'colorpicker',
+                'title' => __( 'Content Text', $this->domain ),
+            ) 
         );
 
         $settings = array(
