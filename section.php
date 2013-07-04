@@ -50,10 +50,18 @@ class CollapserTm extends PageLinesSection
         }
     }
 
+    function get_dms_clone_id($prefix){
+        preg_match('/"([^"]*)"/', $prefix, $match);
+        return $match[1];
+    }
+
     function section_head($clone_id = null)
     {   
         global $post, $pagelines_ID;
-
+        
+        //DMS Compatibility
+        $clone_id      = function_exists('pl_has_editor') ? $this->get_dms_clone_id( $this->prefix() ) : $clone_id;
+        
         $parent      = "collapser-accordion".$clone_id;
         $oset        = array('post_id' => $pagelines_ID, 'clone_id' => $clone_id);
         $limit       = ( ploption('tm_collapser_items', $oset) ) ? ploption('tm_collapser_items', $oset) : '5';
@@ -158,6 +166,9 @@ class CollapserTm extends PageLinesSection
     { 
         global $post, $pagelines_ID;
 
+        //DMS Compatibility
+        $clone_id      = function_exists('pl_has_editor') ? $this->get_dms_clone_id( $this->prefix() ) : $clone_id;
+
         $parent            = "collapser-accordion".$clone_id;
         $current_page_post = $post;
         $oset              = array('post_id' => $pagelines_ID, 'clone_id' => $clone_id);
@@ -181,7 +192,7 @@ class CollapserTm extends PageLinesSection
     ?>
         <div class="collapser-block<?php echo $clone_id?>">
             <h3 class="block-title">
-                <span><?php echo $title ?></span>
+                <span data-sync="tm_collapser_title"><?php echo $title ?></span>
             </h3>
             <div class="row" id="<?php echo $parent ?>-wrapper">
 
@@ -429,8 +440,8 @@ class CollapserTm extends PageLinesSection
         $settings = array(
             'id'        => $this->id.'_meta',
             'name'      => $this->name,
-            'icon'      => $this->icon, 
-            'clone_id'  => $settings['clone_id'], 
+            'icon'      => $this->icon,
+            'clone_id'  => $settings['clone_id'],
             'active'    => $settings['active']
         );
 
