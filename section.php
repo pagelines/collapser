@@ -40,8 +40,16 @@ class CollapserTm extends PageLinesSection
     {
         $this->post_type_setup();
         $this->post_meta_setup();
-        
     } 
+
+    function dmshify(){
+        if( function_exists('pl_has_editor') ){
+            return $this->prefix();
+        }else{
+            return '#nodms';
+        }
+    }
+
     function section_head($clone_id = null)
     {   
         global $post, $pagelines_ID;
@@ -102,33 +110,42 @@ class CollapserTm extends PageLinesSection
         </script>
 
         <style type="text/css">
-            .collapser-block<?php echo $clone_id?>  .block-title{
+            .collapser-block<?php echo $clone_id?>  .block-title,
+            <?php echo $this->dmshify() ?> .block-title{
                 color: <?php echo $title_color ?>;
             }
 
-            .collapser-block<?php echo $clone_id?> .block-title span{ 
+            .collapser-block<?php echo $clone_id?> .block-title span,
+            <?php echo $this->dmshify() ?> .block-title span{
                 background: <?php echo $title_back ?>;
             }
 
-            .collapser-block<?php echo $clone_id?> .collapser-heading{
+            .collapser-block<?php echo $clone_id?> .collapser-heading,
+            <?php echo $this->dmshify() ?> .collapser-heading{
                 border: 1px solid <?php echo $border ?>;
                 background-color: <?php echo $item_back ?> !important;
             }
 
             .collapser-block<?php echo $clone_id?> .collapser-heading:hover,
-            .collapser-block<?php echo $clone_id?> .collapser-heading.active{
+            .collapser-block<?php echo $clone_id?> .collapser-heading.active,
+            <?php echo $this->dmshify() ?> .collapser-heading:hover,
+            <?php echo $this->dmshify() ?> .collapser-heading.active{
                 background-color: <?php echo $item_back_hover ?> !important;
             }
 
-            .collapser-block<?php echo $clone_id?> .collapser-heading .collapser-toggle{
+            .collapser-block<?php echo $clone_id?> .collapser-heading .collapser-toggle
+            <?php echo $this->dmshify() ?> .collapser-heading .collapser-toggle{
                 color: <?php echo $item_title_color ?>;
             }
             .collapser-block<?php echo $clone_id?> .collapser-heading .collapser-toggle:hover,
-            .collapser-block<?php echo $clone_id?> .collapser-heading.active .collapser-toggle{
+            .collapser-block<?php echo $clone_id?> .collapser-heading.active .collapser-toggle,
+            <?php echo $this->dmshify() ?> .collapser-heading .collapser-toggle:hover,
+            <?php echo $this->dmshify() ?> .collapser-heading.active .collapser-toggle{
                 color: <?php echo $item_title_color_hover ?> !important;
             }
 
-            .collapser-block<?php echo $clone_id?> .collapser-inner p{
+            .collapser-block<?php echo $clone_id?> .collapser-inner p,
+            <?php echo $this->dmshify() ?> .collapser-inner p{
                 color: <?php echo $content_color ?>;
             }
 
