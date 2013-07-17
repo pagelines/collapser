@@ -3,13 +3,14 @@
 Section: Collapser
 Author: Enrique Chávez
 Author URI: http://tmeister.net
-Version: 1.2.3
+Version: 2.0
 Description: Collapser is a simple but handy section that provides a way to show small pieces of information using an accordion-nav type with a feature image on a side to stand out the content. With more that 15 options to play with.
 Class Name: CollapserTm
 Cloning: true
 Workswith: templates, main
 External: http://tmeister.net/themes-and-sections/collapser/
 Demo: http://pagelines.tmeister.net/collapser/
+V3:true
 */
 
 /*
@@ -60,13 +61,15 @@ class CollapserTm extends PageLinesSection
         global $post, $pagelines_ID;
 
         //DMS Compatibility
-        $clone_id      = function_exists('pl_has_editor') ? $this->get_dms_clone_id( $this->prefix() ) : $clone_id;
+        $clone_id    = function_exists('pl_has_editor') ? $this->get_dms_clone_id( $this->prefix() ) : $clone_id;
+        $img_path    = function_exists('pl_has_editor') ? WP_PLUGIN_URL . "/collapser/sections/collapser/images" : PL_EXTEND_URL . "/collapser/images" ;
 
         $parent      = "collapser-accordion".$clone_id;
         $oset        = array('post_id' => $pagelines_ID, 'clone_id' => $clone_id);
         $limit       = ( $this->opt('tm_collapser_items', $oset) ) ? $this->opt('tm_collapser_items', $oset) : '5';
         $set         = ( $this->opt('tm_collapser_set', $oset) ) ? $this->opt('tm_collapser_set', $oset) : null;
         $this->posts = $this->get_posts($this->custom_post_type, $this->tax_id, $set, $limit);
+
 
         if( !count( $this->posts ) ){
             return;
@@ -84,7 +87,7 @@ class CollapserTm extends PageLinesSection
         $item_back              = $this->opt('tm_collapser_item_background',$oset) ? pl_hashify($this->opt('tm_collapser_item_background',$oset)) : '#fff';
         $item_back_hover        = $this->opt('tm_collapser_item_background_over',$oset) ? pl_hashify($this->opt('tm_collapser_item_background_over',$oset)) : pl_hashify( pl_link_color() );
         $item_title_color       = $this->opt('tm_collapser_title_item_color',$oset) ? pl_hashify($this->opt('tm_collapser_title_item_color',$oset)) : pl_hashify( pl_text_color() );
-        $item_title_color_hover = $this->opt('tm_collapser_title_over_color',$oset) ? pl_hashify($this->opt('tm_collapser_title_over_color',$oset)) : "fff000";//pl_hashify( pl_text_color() );
+        $item_title_color_hover = $this->opt('tm_collapser_title_over_color',$oset) ? pl_hashify($this->opt('tm_collapser_title_over_color',$oset)) : pl_hashify( pl_text_color() );
         $border                 = $this->opt('tm_collapser_menu_border',$oset) ? pl_hashify($this->opt('tm_collapser_menu_border',$oset)) : '#eaeaea';
         $content_color          = $this->opt('tm_collapser_text_color',$oset) ? pl_hashify($this->opt('tm_collapser_text_color',$oset)) : pl_hashify( pl_text_color() );
 
@@ -121,6 +124,7 @@ class CollapserTm extends PageLinesSection
             .collapser-block<?php echo $clone_id?>  .block-title,
             <?php echo $this->dmshify() ?> .block-title{
                 color: <?php echo $title_color ?>;
+                background: url("<?php echo $img_path ?>/title-bg.png") repeat-x scroll 0 18px transparent;;
             }
 
             .collapser-block<?php echo $clone_id?> .block-title span,
@@ -131,14 +135,15 @@ class CollapserTm extends PageLinesSection
             .collapser-block<?php echo $clone_id?> .collapser-heading,
             <?php echo $this->dmshify() ?> .collapser-heading{
                 border: 1px solid <?php echo $border ?>;
-                background-color: <?php echo $item_back ?> !important;
+                background: url("<?php echo $img_path ?>/more.png") 15px no-repeat;
+                background-color:  <?php echo $item_back ?>
             }
 
             .collapser-block<?php echo $clone_id?> .collapser-heading:hover,
             .collapser-block<?php echo $clone_id?> .collapser-heading.active,
             <?php echo $this->dmshify() ?> .collapser-heading:hover,
             <?php echo $this->dmshify() ?> .collapser-heading.active{
-                background-color: <?php echo $item_back_hover ?> !important;
+                background: url("<?php echo $img_path ?>/less.png") 15px  no-repeat <?php echo $item_back_hover ?>;
             }
 
             .collapser-block<?php echo $clone_id?> .collapser-heading .collapser-toggle
@@ -162,7 +167,7 @@ class CollapserTm extends PageLinesSection
 
     <?php
     }
-    function section_template( $clone_id = null )
+    function section_template($clone_id = null)
     {
         global $post, $pagelines_ID;
 
@@ -365,13 +370,14 @@ class CollapserTm extends PageLinesSection
                 'exp'           => __('Select the set you would like to show on this page. if don\'t select a set the slider will show the last entries under collapser posts', $this->domain)
             ),
             'tm_collapser_items' => array(
-                'type'          => 'count_select',
-                'inputlabel'    => __('Number of post to show', $this->domain),
-                'title'         => __('Number of post', $this->domain),
-                'shortexp'      => __('Default value is 5', $this->domain),
-                'exp'           => __('The amount of post to show.', $this->domain),
-                'count_start'   => 1,
-                'count_number'  => 100,
+                'type'         => 'count_select',
+                'inputlabel'   => __('Number of post to show', $this->domain),
+                'title'        => __('Number of post', $this->domain),
+                'shortexp'     => __('Default value is 5', $this->domain),
+                'exp'          => __('The amount of post to show.', $this->domain),
+                'count_start'  => 1,
+                'count_number' => 100,
+                'default'      => 5
             ),
             'tm_collapser_hide_first_tab' => array(
                 'type' => 'check',
@@ -396,43 +402,50 @@ class CollapserTm extends PageLinesSection
                 'type' => 'colorpicker',
                 'inputlabel' => __( 'Title Background', $this->domain ),
                 'title' => __( 'Title Background', $this->domain ),
-                'default' => '#F00000'
+                'default' => '#FFFFFF'
             ),
 
             'tm_collapser_title_color'  => array(
                 'inputlabel'    => __( 'Section Title Text', $this->domain ),
                 'type' => 'colorpicker',
-                'title' => __( 'Section Title Text', $this->domain )
+                'title' => __( 'Section Title Text', $this->domain ),
+                'default' => pl_hashify( pl_link_color() )
             ),
             'tm_collapser_item_background'  => array(
                 'inputlabel'    => __( 'Item highlight', $this->domain ),
                 'type' => 'colorpicker',
                 'title' => __( 'Item highlight', $this->domain ),
+                'default' => '#FFFFFF'
             ),
             'tm_collapser_item_background_over' => array(
                 'inputlabel'    => __( 'Item highlight hover', $this->domain ),
                 'type' => 'colorpicker',
                 'title' => __( 'Item highlight hover', $this->domain ),
+                'default' => pl_hashify( pl_link_color() )
             ),
             'tm_collapser_title_item_color' => array(
                 'inputlabel'    => __( 'Item Title Text', $this->domain ),
                 'type' => 'colorpicker',
                 'title' => __( 'Item Title Text', $this->domain ),
+                'default' => pl_hashify( pl_text_color() )
             ),
             'tm_collapser_title_over_color' => array(
                 'inputlabel'    => __( 'Item Title Text Hover', $this->domain ),
                 'type' => 'colorpicker',
                 'title' => __( 'Item Title Text Hover', $this->domain ),
+                'default' => pl_hashify( pl_text_color() )
             ),
             'tm_collapser_menu_border'  => array(
                 'inputlabel'    => __( 'Item Border', $this->domain ),
                 'type' => 'colorpicker',
                 'title' => __( 'Item Border', $this->domain ),
+                'default' => '#eaeaea'
             ),
             'tm_collapser_text_color'   => array(
                 'inputlabel'    => __( 'Content Text', $this->domain ),
                 'type' => 'colorpicker',
                 'title' => __( 'Content Text', $this->domain ),
+                'default' => pl_hashify( pl_text_color() )
             )
         );
 
@@ -445,14 +458,13 @@ class CollapserTm extends PageLinesSection
         );
 
         register_metatab($settings, $opt_array);
-
     }
 
     function get_posts( $custom_post, $tax_id, $set = null, $limit = null){
-        $query                 = array();
-        $query['orderby']      = 'ID';
-        $query['post_type']    = $custom_post;
-        $query[ $tax_id ] = $set;
+        $query              = array();
+        $query['orderby']   = 'ID';
+        $query['post_type'] = $custom_post;
+        $query[ $tax_id ]   = $set;
 
         if(isset($limit)){
             $query['showposts'] = $limit;
