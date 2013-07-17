@@ -41,6 +41,9 @@ And of course Collapser is full responsive.
 
 
 == Changelog ==
+= 2.0 =
+* DMS Ready
+
 = 1.2.3 =
 * remove sprintf error with %
 
