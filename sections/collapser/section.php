@@ -32,12 +32,15 @@ class CollapserTm extends PageLinesSection
 
      function verify_license(){
         if( !class_exists( 'chavezShopVerifier' ) ) {
-            include( dirname( __FILE__ ) . '/chavezshop_verifier.php' );
+            include( dirname( __FILE__ ) . '/inc/chavezshop_verifier.php' );
         }
         $this->chavezShop = new chavezShopVerifier( $this->section_name, $this->section_version, $this->opt('collapser_license_key') );
     }
 
     function add_global_panel($settings){
+        if( get_option( EC_ITEM_NAME."_activated" ) ){
+            $valid = ( $this->chavezShop->check_license() ) ? ' - Your license is valid' : ' - Your license is invalid';
+        }
         $settings['eChavez'] = array(
             'name' => 'Enrique Chavez Shop',
             'icon' => 'icon-shopping-cart',
@@ -45,7 +48,7 @@ class CollapserTm extends PageLinesSection
                 array(
                     'key'   => 'collapser_license_key',
                     'type'  => 'text',
-                    'title' => '<i class="icon-shopping-cart"></i> ' . __('Collapser License Key', $this->domain),
+                    'title' => '<i class="icon-shopping-cart"></i> ' . __('Collapser License Key', $this->domain) . $valid,
                     'label' => __('License Key', $this->domain),
                     'help'  => __('The section is fully functional whitout a key license, this license is used only get access to autoupdates within your admin.', $this->domain)
 

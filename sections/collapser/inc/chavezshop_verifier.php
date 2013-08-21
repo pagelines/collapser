@@ -26,6 +26,10 @@ class chavezShopVerifier
         	if( !$this->is_license_active() ){
         		$this->active_license();
         	}
+        }else{
+        	delete_option( $this->section_name."_activated");
+			delete_option( $this->section_name.'_license');
+			delete_transient( $this->section_name.'tmp_valid_status');
         }
 	}
 
