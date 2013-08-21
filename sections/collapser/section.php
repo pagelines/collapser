@@ -6,29 +6,9 @@ Author URI: http://tmeister.net
 Version: 2.0
 Description: Collapser is a simple but handy section that provides a way to show small pieces of information using an accordion-nav type with a feature image on a side to stand out the content. With more that 15 options to play with.
 Class Name: CollapserTm
-Cloning: true
-Workswith: templates, main
 External: http://tmeister.net/themes-and-sections/collapser/
 Demo: http://pagelines.tmeister.net/collapser/
-V3:true
 */
-
-/*
- * PageLines Headers API
- *
- *  Sections support standard WP file headers (http://codex.wordpress.org/File_Header) with these additions:
- *  -----------------------------------
- *   - Section: The name of your section.
- *   - Class Name: Name of the section class goes here, has to match the class extending PageLinesSection.
- *   - Cloning: (bool) Enable cloning features.
- *   - Depends: If your section needs another section loaded first set its classname here.
- *   - Workswith: Comma seperated list of template areas the section is allowed in.
- *   - Failswith: Comma seperated list of template areas the section is NOT allowed in.
- *   - Demo: Use this to point to a demo for this product.
- *   - External: Use this to point to an external overview of the product
- *   - Long: Add a full description, used on the actual store page on http://www.pagelines.com/store/
- *
- */
 
 class CollapserTm extends PageLinesSection
 {
@@ -36,11 +16,45 @@ class CollapserTm extends PageLinesSection
     var $domain           = 'tm_collapser';
     var $tax_id           = 'tm_collapser_sets';
     var $custom_post_type = 'tm_collapser_post';
+    var $section_name      = 'Collapser';
+    var $section_version   = '2.0';
+
+
 
     function section_persistent()
     {
         $this->post_type_setup();
         $this->post_meta_setup();
+        add_action('admin_init', array(&$this, 'verify_license'), 10);
+        add_filter('pl_sorted_settings_array', array(&$this, 'add_global_panel'));
+        //$this->verify_license();
+    }
+
+     function verify_license(){
+        //var_dump("GOOOOOOOOO");
+        if( !class_exists( 'chavezShopVerifier' ) ) {
+            include( dirname( __FILE__ ) . '/chavezshop_verifier.php' );
+        }
+        new chavezShopVerifier( $this->section_name, $this->section_version, $this->opt('collapser_license_key') );
+    }
+
+    function add_global_panel($settings){
+        $settings['eChavez'] = array(
+            'name' => 'Enrique Chavez Shop',
+            'icon' => 'icon-shopping-cart',
+            'opts' => array(
+                array(
+                    'key'   => 'collapser_license_key',
+                    'type'  => 'text',
+                    'title' => '<i class="icon-shopping-cart"></i> ' . __('Collapser License Key', $this->domain),
+                    'label' => __('License Key', $this->domain),
+                    'help'  => __('The section is fully functional whitout a key license, this license is used only get access to autoupdates within your admin.', $this->domain)
+
+                ),
+            )
+        );
+        return $settings;
+
     }
 
     function dmshify(){
@@ -479,3 +493,4 @@ class CollapserTm extends PageLinesSection
     }
 
 } /* End of section class - No closing php tag needed */
+
