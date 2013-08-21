@@ -30,7 +30,3 @@ function check_for_updates(){
 		);
 	}
 }
-
-
-
-

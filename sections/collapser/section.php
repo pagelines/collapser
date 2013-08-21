@@ -21,7 +21,6 @@ class CollapserTm extends PageLinesSection
     var $chavezShop;
 
 
-
     function section_persistent()
     {
         $this->post_type_setup();
@@ -38,9 +37,11 @@ class CollapserTm extends PageLinesSection
     }
 
     function add_global_panel($settings){
+
         if( get_option( EC_ITEM_NAME."_activated" ) ){
             $valid = ( $this->chavezShop->check_license() ) ? ' - Your license is valid' : ' - Your license is invalid';
         }
+
         $settings['eChavez'] = array(
             'name' => 'Enrique Chavez Shop',
             'icon' => 'icon-shopping-cart',
