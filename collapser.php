@@ -10,21 +10,23 @@
 
 
 define( 'EC_STORE_URL', 'http://enriquechavez.co' );
-define( 'EC_ITEM_NAME', 'Collapser' );
-add_action( 'admin_init', 'check_for_updates' );
+add_action( 'admin_init', 'collapser_check_for_updates' );
 
-function check_for_updates(){
-	if( get_option( EC_ITEM_NAME."_activated" )){
+function collapser_check_for_updates(){
+	$item_name  = "Collapser";
+	$item_key = strtolower( str_replace(' ', '_', $item_name) );
+
+	if( get_option( $item_key."_activated" )){
 		if( !class_exists( 'EDD_SL_Plugin_Updater' ) ) {
 			include( dirname( __FILE__ ) . '/sections/collapser/inc/EDD_SL_Plugin_Updater.php' );
 		}
 
-		$license_key = trim( get_option( EC_ITEM_NAME."_license", $default = false ) );
+		$license_key = trim( get_option( $item_key."_license", $default = false ) );
 
 		$edd_updater = new EDD_SL_Plugin_Updater( EC_STORE_URL, __FILE__, array(
 				'version' 	=> '2.0',
 				'license' 	=> $license_key,
-				'item_name' => EC_ITEM_NAME,
+				'item_name' => $item_name,
 				'author' 	=> 'Enrique Chavez'
 			)
 		);

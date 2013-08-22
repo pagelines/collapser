@@ -8,6 +8,7 @@ class chavezShopVerifier
 	var $remote_site = 'http://enriquechavez.co';
 	var $license_key;
 	var $section_name;
+	var $section_key;
 
 	function __construct($section_name, $section_version, $license_key)
 	{
@@ -21,26 +22,27 @@ class chavezShopVerifier
 
         $this->license_key  = trim( $license_key );
         $this->section_name = trim( $section_name );
+        $this->section_key = strtolower( str_replace(' ', '_', $this->section_name) );
 
         if($license_key){
         	if( !$this->is_license_active() ){
         		$this->active_license();
         	}
         }else{
-        	delete_option( $this->section_name."_activated");
-			delete_option( $this->section_name.'_license');
-			delete_transient( $this->section_name.'tmp_valid_status');
+        	delete_option( $this->section_key."_activated");
+			delete_option( $this->section_key.'_license');
+			delete_transient( $this->section_key.'tmp_valid_status');
         }
 	}
 
 	function check_license(){
-		if( get_transient( $this->section_name.'tmp_valid_status' ) ){
-			return get_transient( $this->section_name.'tmp_valid_status' );
+		if( get_transient( $this->section_key.'tmp_valid_status' ) ){
+			return get_transient( $this->section_key.'tmp_valid_status' );
 		}
 		$api_params = array(
 			'edd_action' => 'check_license',
 			'license' => $this->license_key,
-			'item_name' => urlencode( $this->section_name )
+			'item_name' => urlencode( $this->section_key )
 		);
 
 		$response = wp_remote_get( add_query_arg( $api_params, $this->remote_site ), array( 'timeout' => 15, 'sslverify' => false ) );
@@ -51,7 +53,7 @@ class chavezShopVerifier
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
 		if( $license_data->license == 'valid' ) {
-			set_transient( $this->section_name.'tmp_valid_status', 'Valid', DAY_IN_SECONDS );
+			set_transient( $this->section_key.'tmp_valid_status', 'Valid', DAY_IN_SECONDS );
 			return true;
 		} else {
 			return false;
@@ -74,13 +76,14 @@ class chavezShopVerifier
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
 		if( $license_data->license == 'valid' ){
-			update_option( $this->section_name."_activated", true);
-			update_option( $this->section_name.'_license', $this->license_key, '', 'yes' );
+			update_option( $this->section_key."_activated", true);
+			update_option( $this->section_key.'_license', $this->license_key, '', 'yes' );
+			set_transient( $this->section_key.'tmp_valid_status', 'Valid', DAY_IN_SECONDS );
 		}
 	}
 
 	function is_license_active(){
-		return get_option( $this->section_name."_activated" );
+		return get_option( $this->section_key."_activated" );
 	}
 
 }

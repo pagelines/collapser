@@ -18,6 +18,7 @@ class CollapserTm extends PageLinesSection
     var $custom_post_type = 'tm_collapser_post';
     var $section_name      = 'Collapser';
     var $section_version   = '2.0';
+    var $section_key ;
     var $chavezShop;
 
 
@@ -25,8 +26,9 @@ class CollapserTm extends PageLinesSection
     {
         $this->post_type_setup();
         $this->post_meta_setup();
-        add_filter('pl_sorted_settings_array', array(&$this, 'add_global_panel'));
+        $this->section_key = strtolower( str_replace(' ', '_', $this->section_name) );
         $this->verify_license();
+        add_filter('pl_sorted_settings_array', array(&$this, 'add_global_panel'));
     }
 
      function verify_license(){
@@ -37,25 +39,29 @@ class CollapserTm extends PageLinesSection
     }
 
     function add_global_panel($settings){
-
-        if( get_option( EC_ITEM_NAME."_activated" ) ){
+        $valid = "";
+        if( get_option( $this->section_key."_activated" ) ){
             $valid = ( $this->chavezShop->check_license() ) ? ' - Your license is valid' : ' - Your license is invalid';
         }
 
-        $settings['eChavez'] = array(
-            'name' => 'Enrique Chavez Shop',
-            'icon' => 'icon-shopping-cart',
-            'opts' => array(
-                array(
-                    'key'   => 'collapser_license_key',
-                    'type'  => 'text',
-                    'title' => '<i class="icon-shopping-cart"></i> ' . __('Collapser License Key', $this->domain) . $valid,
-                    'label' => __('License Key', $this->domain),
-                    'help'  => __('The section is fully functional whitout a key license, this license is used only get access to autoupdates within your admin.', $this->domain)
+        if( !isset( $settings['eChavez'] ) ){
+            $settings['eChavez'] = array(
+                'name' => 'Enrique Chavez Shop',
+                'icon' => 'icon-shopping-cart',
+                'opts' => array()
+            );
+        }
 
-                )
-            )
+        $collapser_opts = array(
+            'key'   => 'collapser_license_key',
+            'type'  => 'text',
+            'title' => '<i class="icon-shopping-cart"></i> ' . __('Collapser License Key', $this->domain) . $valid,
+            'label' => __('License Key', $this->domain),
+            'help'  => __('The section is fully functional whitout a key license, this license is used only get access to autoupdates within your admin.', $this->domain)
+
         );
+
+        array_push($settings['eChavez']['opts'], $collapser_opts);
         return $settings;
 
     }
