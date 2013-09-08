@@ -280,7 +280,7 @@ class CollapserTm extends PageLinesSection
                     </div>
                     <div id="'.$parent.'-'.$post->ID.'" class="accordion-body collapse '.$in.'">
                       <div class="collapser-inner">
-                        <p>'.nl2br($post->post_content).'</p>
+                        <p>'.apply_filters('the_content' ,$post->post_content).'</p>
                         '.$morelink.'
                       </div>
                     </div>
