@@ -8,7 +8,7 @@
 	Description: Collapser is a simple but handy section that provides a way to show small pieces of information using an accordion-nav type with a feature image on a side to stand out the content. With more that 15 options to play with.
 */
 
-add_action( 'admin_init', 'collapser_check_for_updates' );
+//add_action( 'admin_init', 'collapser_check_for_updates' );
 
 function collapser_check_for_updates(){
 	$item_name  = "Collapser";
