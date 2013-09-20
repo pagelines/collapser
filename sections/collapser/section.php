@@ -8,6 +8,7 @@ Description: Collapser is a simple but handy section that provides a way to show
 Class Name: CollapserTm
 External: http://enriquechavez.co/products/collapser/
 Demo: http://pagelines.tmeister.net/collapser/
+PageLines: true
 */
 
 class CollapserTm extends PageLinesSection

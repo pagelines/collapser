@@ -5,6 +5,7 @@
 	Author: Enrique Chavez
 	Author URI: http://enriquechavez.co
 	Version: 2.2
+	PageLines: true
 	Description: Collapser is a simple but handy section that provides a way to show small pieces of information using an accordion-nav type with a feature image on a side to stand out the content. With more that 15 options to play with.
 */
 
