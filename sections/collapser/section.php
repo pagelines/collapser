@@ -3,11 +3,12 @@
 Section: Collapser
 Author: Enrique Chávez
 Author URI: http://tmeister.net
-Version: 2.0
+Version: 2.2
 Description: Collapser is a simple but handy section that provides a way to show small pieces of information using an accordion-nav type with a feature image on a side to stand out the content. With more that 15 options to play with.
 Class Name: CollapserTm
-External: http://tmeister.net/themes-and-sections/collapser/
+External: http://enriquechavez.co/products/collapser/
 Demo: http://pagelines.tmeister.net/collapser/
+PageLines: true
 */
 
 class CollapserTm extends PageLinesSection
@@ -17,7 +18,7 @@ class CollapserTm extends PageLinesSection
     var $tax_id           = 'tm_collapser_sets';
     var $custom_post_type = 'tm_collapser_post';
     var $section_name      = 'Collapser';
-    var $section_version   = '2.0';
+    var $section_version   = '2.2';
     var $section_key ;
     var $chavezShop;
 
@@ -162,10 +163,15 @@ class CollapserTm extends PageLinesSection
                 background-color:  <?php echo $item_back ?>
             }
 
-            .collapser-block<?php echo $clone_id?> .collapser-heading:hover,
-            .collapser-block<?php echo $clone_id?> .collapser-heading.active,
-            <?php echo $this->dmshify() ?> .collapser-heading:hover,
-            <?php echo $this->dmshify() ?> .collapser-heading.active{
+            .collapser-block<?php echo $clone_id?> .plus-min,
+            .collapser-block<?php echo $clone_id?> .plus-min{
+                background: url("<?php echo $img_path ?>/more.png") 15px no-repeat;
+            }
+
+            .collapser-block<?php echo $clone_id?> .plus-min:hover,
+            .collapser-block<?php echo $clone_id?> .plus-min.active,
+            <?php echo $this->dmshify() ?> .collapser-heading:hover .plus-min,
+            <?php echo $this->dmshify() ?> .collapser-heading.active .plus-min{
                 background: url("<?php echo $img_path ?>/less.png") 15px  no-repeat <?php echo $item_back_hover ?>;
             }
 
@@ -275,12 +281,15 @@ class CollapserTm extends PageLinesSection
             $collapser = '<div class="accordion-group">
                     <div class="collapser-heading '.$active.'" id="'.$parent.'-collapser-'.$post->ID.'">
                       <a class="collapser-toggle" data-toggle="collapse" data-parent="#'.$parent.'" href="#'.$parent.'-'.$post->ID.'" data-image="'.$image.'">
-                        '.get_the_title().'
+                            <span class="plus-min"></span>
+                            <span class="title-head">
+                                '.get_the_title().'
+                            </span>
                       </a>
                     </div>
                     <div id="'.$parent.'-'.$post->ID.'" class="accordion-body collapse '.$in.'">
                       <div class="collapser-inner">
-                        <p>'.nl2br($post->post_content).'</p>
+                        <p>'.apply_filters('the_content' ,$post->post_content).'</p>
                         '.$morelink.'
                       </div>
                     </div>

@@ -33,25 +33,36 @@
 			.border-radius(0);
 
 			.collapser-heading{
-
-				padding: 0 0 0 50px;
-				.transition( all 0.2s ease );
 				margin-bottom: 5px;
-				.collapser-toggle{
-					display:block;
-					font-size:16px;
-					background-color:@pl-base;
-					padding:15px 0px 15px 10px;
-					.transition( all 0.2s ease );
-					&:hover{
-						color:@pl-link;
-					}
+			}
+
+			.collapser-toggle{
+				display:block;
+				font-size:16px;
+				background-color:@pl-base;
+				.transition( all 0.2s ease );
+				&:hover{
+					color:@pl-link;
 				}
+			}
+
+			.plus-min{
+				padding: 0;
+				.transition( all 0.2s ease );
+				display: block;
+				height: 51px;
+				width: 50px;
+				float:left;
+
 				&:hover, &.active{
 					.collapser-toggle{
 						color:@pl-link;
 					}
 				}
+			}
+			.title-head{
+				padding: 15px 15px 15px 65px;
+				display: block;
 			}
 
 			.collapser-inner{
