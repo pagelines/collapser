@@ -162,10 +162,15 @@ class CollapserTm extends PageLinesSection
                 background-color:  <?php echo $item_back ?>
             }
 
-            .collapser-block<?php echo $clone_id?> .collapser-heading:hover,
-            .collapser-block<?php echo $clone_id?> .collapser-heading.active,
-            <?php echo $this->dmshify() ?> .collapser-heading:hover,
-            <?php echo $this->dmshify() ?> .collapser-heading.active{
+            .collapser-block<?php echo $clone_id?> .plus-min,
+            .collapser-block<?php echo $clone_id?> .plus-min{
+                background: url("<?php echo $img_path ?>/more.png") 15px no-repeat;
+            }
+
+            .collapser-block<?php echo $clone_id?> .plus-min:hover,
+            .collapser-block<?php echo $clone_id?> .plus-min.active,
+            <?php echo $this->dmshify() ?> .collapser-heading:hover .plus-min,
+            <?php echo $this->dmshify() ?> .collapser-heading.active .plus-min{
                 background: url("<?php echo $img_path ?>/less.png") 15px  no-repeat <?php echo $item_back_hover ?>;
             }
 
@@ -275,7 +280,10 @@ class CollapserTm extends PageLinesSection
             $collapser = '<div class="accordion-group">
                     <div class="collapser-heading '.$active.'" id="'.$parent.'-collapser-'.$post->ID.'">
                       <a class="collapser-toggle" data-toggle="collapse" data-parent="#'.$parent.'" href="#'.$parent.'-'.$post->ID.'" data-image="'.$image.'">
-                        '.get_the_title().'
+                            <span class="plus-min"></span>
+                            <span class="title-head">
+                                '.get_the_title().'
+                            </span>
                       </a>
                     </div>
                     <div id="'.$parent.'-'.$post->ID.'" class="accordion-body collapse '.$in.'">

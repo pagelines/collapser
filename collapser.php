@@ -8,8 +8,6 @@
 	Description: Collapser is a simple but handy section that provides a way to show small pieces of information using an accordion-nav type with a feature image on a side to stand out the content. With more that 15 options to play with.
 */
 
-
-define( 'EC_STORE_URL', 'http://enriquechavez.co' );
 add_action( 'admin_init', 'collapser_check_for_updates' );
 
 function collapser_check_for_updates(){
@@ -23,7 +21,7 @@ function collapser_check_for_updates(){
 
 		$license_key = trim( get_option( $item_key."_license", $default = false ) );
 
-		$edd_updater = new EDD_SL_Plugin_Updater( EC_STORE_URL, __FILE__, array(
+		$edd_updater = new EDD_SL_Plugin_Updater( 'http://enriquechavez.co', __FILE__, array(
 				'version' 	=> '2.0',
 				'license' 	=> $license_key,
 				'item_name' => $item_name,
