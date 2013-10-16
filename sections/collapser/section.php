@@ -3,7 +3,7 @@
 Section: Collapser
 Author: Enrique Chávez
 Author URI: http://tmeister.net
-Version: 2.2
+Version: 2.3
 Description: Collapser is a simple but handy section that provides a way to show small pieces of information using an accordion-nav type with a feature image on a side to stand out the content. With more that 15 options to play with.
 Class Name: CollapserTm
 External: http://enriquechavez.co/products/collapser/
@@ -20,7 +20,7 @@ class CollapserTm extends PageLinesSection
     var $tax_id           = 'tm_collapser_sets';
     var $custom_post_type = 'tm_collapser_post';
     var $section_name      = 'Collapser';
-    var $section_version   = '2.2';
+    var $section_version   = '2.3';
     var $section_key ;
     var $chavezShop;
 
