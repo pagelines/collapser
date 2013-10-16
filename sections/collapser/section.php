@@ -225,7 +225,7 @@ class CollapserTm extends PageLinesSection
 
         $current = $this->posts[0];
         $inner_oset = array('post_id' => $current->ID);
-        $image = plmeta('tm_collapser_image', $inner_oset);
+        $image = $this->find_and_show_image($current->ID, true);
     ?>
         <div class="collapser-block<?php echo $clone_id?>">
             <h3 class="block-title">
@@ -275,7 +275,7 @@ class CollapserTm extends PageLinesSection
         {
             setup_postdata( $post );
             $inner_oset = array('post_id' => $post->ID);
-            $image = plmeta('tm_collapser_image', $inner_oset);
+            $image = $this->find_and_show_image($post->ID, true);
             $link = plmeta('tm_collapser_url', $inner_oset);
             $readmore = plmeta('tm_collapser_read_more_text', $inner_oset);
             $morelink = ( strlen($link) ) ? '<p><a href="'.$link.'">'.$readmore.'</a></p>' : ' ';
@@ -305,13 +305,23 @@ class CollapserTm extends PageLinesSection
 
     function meta_boxes( $meta_boxes ){
         $meta_boxes[] = array(
-        'title' => 'Collapser',
+        'title' => 'Collapser Extra Data',
         'pages' => $this->custom_post_type,
         'fields' => array(
             array(
-                'id' => 'tm_collapser_image',
-                'name' => 'the name',
+                'id'   => 'tm_collapser_image',
+                'name' => __( 'Collapser Post Image', $this->domain),
                 'type' => 'image'
+            ),
+            array(
+                'id'   => 'tm_collapser_url',
+                'name' => __( 'Target URL (Optional)', $this->domain),
+                'type' => 'text_url'
+            ),
+            array(
+                'id'   => 'tm_collapser_read_more_text',
+                'name' => __( 'Link title (Optional)', $this->domain),
+                'type' => 'text'
             )
         )
     );
@@ -396,10 +406,22 @@ class CollapserTm extends PageLinesSection
                 echo get_the_term_list($post->ID, $this->tax_id, '', ', ','');
                 break;
             case 'collapser_media':
-                echo '<img src="'.m_pagelines('tm_collapser_image', $post->ID).'" style="max-width: 300px; max-height: 100px" />';
+                echo $this->find_and_show_image($post->ID);
                 break;
         }
     }
+
+    function find_and_show_image($postID, $return_path = false){
+        $image = get_post_meta($postID, 'tm_collapser_image', true);
+        if( strstr($image, 'http') ){
+            $image_url = $image;
+        }else{
+            $image_url = wp_get_attachment_url( $image );
+        }
+        return ( !$return_path ) ? '<img src="'.$image_url.'" style="max-width: 300px; max-height: 100px" />' : $image_url;
+    }
+
+
 
     function section_optionator( $settings )
     {
