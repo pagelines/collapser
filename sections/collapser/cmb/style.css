@@ -6,7 +6,7 @@
 .cmb_metabox th label { margin-top:5px; display:block;}
 div.cmb_metabox_description { color: #AAA; font-style: italic; margin: 2px 0 16px !important;}
 span.cmb_metabox_description { color: #AAA; font-style: italic;}
-.cmb_metabox input, 
+.cmb_metabox input,
 .cmb_metabox textarea { font-size:12px; padding: 5px; margin: 0; }
 .cmb_metabox input[type=text], table.cmb_metabox textarea, table.cmb_metabox select { width: 100%; }
 .cmb_metabox textarea.cmb_textarea_code,
@@ -357,7 +357,7 @@ button.repeat-field { display: block !important; clear: both; }
 .field .hm-uploader .rwmb-drag-drop-inside p { font-size: 14px; }
 .field .hm-uploader .current-image { border: none; box-shadow: inset 0 0 15px rgba(0,0,0,0.1),inset 0 0 0 1px rgba(0,0,0,0.05); position: relative; }
 .field .hm-uploader .current-image::after { content: ''; display: block; position: absolute; top: 0; left: 0; right: 0; bottom: 0; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); overflow: hidden; }
-.field .hm-uploader .current-image img { vertical-align: top !important; }
+.field .hm-uploader .current-image img { vertical-align: top !important; max-width: 100%; height: auto; }
 .field .hm-uploader .current-image .image-options { z-index: 1; }
 
 .CMB_File_Field .field-item { width: 150px; height: 150px; float: left; margin: 0 8px 8px 0 !important; position: relative; text-align: center; line-height: 150px; padding: 0 !important; z-index: 1; }
