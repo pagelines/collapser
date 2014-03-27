@@ -3,7 +3,7 @@
 Section: Collapser
 Author: Enrique Chávez
 Author URI: http://tmeister.net
-Version: 2.3.1
+Version: 2.3.2
 Description: Collapser is a simple but handy section that provides a way to show small pieces of information using an accordion-nav type with a feature image on a side to stand out the content. With more that 15 options to play with.
 Class Name: CollapserTm
 External: http://enriquechavez.co/products/collapser/
@@ -11,7 +11,9 @@ Demo: http://pagelines.tmeister.net/collapser/
 PageLines: true
 */
 
-require_once( 'cmb/custom-meta-boxes.php' );
+if( ! function_exists('cmb_init') ){
+    require_once( 'cmb/custom-meta-boxes.php' );
+}
 
 class CollapserTm extends PageLinesSection
 {
@@ -20,7 +22,7 @@ class CollapserTm extends PageLinesSection
     var $tax_id           = 'tm_collapser_sets';
     var $custom_post_type = 'tm_collapser_post';
     var $section_name      = 'Collapser';
-    var $section_version   = '2.3.1';
+    var $section_version   = '2.3.2';
     var $section_key ;
     var $chavezShop;
 
@@ -95,7 +97,7 @@ class CollapserTm extends PageLinesSection
         $oset        = array('post_id' => $pagelines_ID, 'clone_id' => $clone_id);
         $limit       = ( $this->opt('tm_collapser_items', $oset) ) ? $this->opt('tm_collapser_items', $oset) : '5';
         $set         = ( $this->opt('tm_collapser_set', $oset) ) ? $this->opt('tm_collapser_set', $oset) : null;
-        $this->posts = $this->get_posts($this->custom_post_type, $this->tax_id, $set, $limit);
+        $this->posts = $this->custom_get_posts($this->custom_post_type, $this->tax_id, $set, $limit);
 
 
         if( !count( $this->posts ) ){
@@ -215,7 +217,7 @@ class CollapserTm extends PageLinesSection
         $title             = ( $this->opt('tm_collapser_title', $oset) ) ? $this->opt('tm_collapser_title', $oset) : 'Collapser Section';
         $position          = ( $this->opt('tm_collapser_position', $oset) ) ? $this->opt('tm_collapser_position', $oset) : 'left';
         $read_more_text    = ( $this->opt('tm_collapser_read_more_text', $oset ) ) ? $this->opt('tm_collapser_read_more_text', $oset )  : 'Read More';
-        $this->posts       = $this->get_posts($this->custom_post_type, $this->tax_id, $set, $limit);
+        $this->posts       = $this->custom_get_posts($this->custom_post_type, $this->tax_id, $set, $limit);
         $show_first        = ! $this->opt( 'tm_collapser_hide_first_tab',$oset );
 
         if( !count($this->posts  ) ){
@@ -367,8 +369,7 @@ class CollapserTm extends PageLinesSection
 
         $pt_tab = array(
             'id'        => 'tm_collapser_metatab',
-            'name'      => __("Please fill the below fields", 'collapser') ,
-            'icon'      => $this->icon,
+            'name'      => __("Please fill the below fields", 'collapser')
         );
 
         $pt_panel->register_tab( $pt_tab, $pt_tab_options );
@@ -381,7 +382,6 @@ class CollapserTm extends PageLinesSection
             'singular_label' => __('Post', 'collapser'),
             'description'    => __('', 'collapser'),
             'taxonomies'     => array( $this->tax_id ),
-            'menu_icon'      => $this->icon,
             'supports'       => array( 'title', 'editor')
         );
         $taxonomies = array(
@@ -525,7 +525,6 @@ class CollapserTm extends PageLinesSection
         $settings = array(
             'id'        => $this->id.'_meta',
             'name'      => $this->name,
-            'icon'      => $this->icon,
             'clone_id'  => $settings['clone_id'],
             'active'    => $settings['active']
         );
@@ -533,7 +532,7 @@ class CollapserTm extends PageLinesSection
         register_metatab($settings, $opt_array);
     }
 
-    function get_posts( $custom_post, $tax_id, $set = null, $limit = null){
+    function custom_get_posts( $custom_post, $tax_id, $set = null, $limit = null){
         $query              = array();
         $query['orderby']   = 'ID';
         $query['post_type'] = $custom_post;
